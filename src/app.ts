@@ -1,25 +1,15 @@
 import express, { type Express, type Request, type Response } from 'express';
 import { MongoClient, ServerApiVersion, type Db, type Collection } from 'mongodb';
 import dotenv from 'dotenv';
+import { Contrato } from './Contrato';
 
 const app: Express = express();
-const port = 3000;
+const PORT = 3000;
+
 dotenv.config();
 
-class Contrato {
-  id: String;
-  title: String;
-  valueAmount: number;
-
-  constructor(id: String, title: String, valueAmount: number) {
-    this.id = id;
-    this.title = title;
-    this.valueAmount = valueAmount;
-  }
-}
-
 app.get('/', async (req: Request, res: Response) => {
-   const uri = process.env.MONGODB_URI ?? "";
+   const uri: string = process.env.MONGODB_URI ?? "";
    const contratos: Contrato[] = [];
 
    const client = new MongoClient(uri, {
@@ -30,7 +20,7 @@ app.get('/', async (req: Request, res: Response) => {
       },
    });
 
-   const database: Db = client.db(process.env.MONGODB_DATABASE ?? "licitaciones");
+   const database: Db = client.db("licitaciones");
    const collection: Collection = database.collection('contratos');
 
    const projectFields = { _id: 0, identifier: 1, valueAmount: 1 };
@@ -43,6 +33,6 @@ app.get('/', async (req: Request, res: Response) => {
    res.send(contratos.sort((a, b) => a.valueAmount - b.valueAmount));
 });
 
-app.listen(port, () => {
-   console.log(`Example app listening on port ${port}`);
+app.listen(PORT, () => {
+   console.log(`Example app listening on port ${PORT}`);
 });
