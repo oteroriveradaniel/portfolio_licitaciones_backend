@@ -1,9 +1,10 @@
 import express, { type Express, type Request, type Response } from 'express';
 import { MongoClient, ServerApiVersion, type Db, type Collection } from 'mongodb';
-import { config } from 'dotenv';
+import dotenv from 'dotenv';
 
 const app: Express = express();
 const port = 3000;
+dotenv.config();
 
 class Contrato {
   id: String;
