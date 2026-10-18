@@ -1,5 +1,6 @@
 import express, { type Express, type Request, type Response } from 'express';
 import { MongoClient, ServerApiVersion, type Db, type Collection } from 'mongodb';
+import { config } from 'dotenv';
 
 const app: Express = express();
 const port = 3000;
@@ -17,7 +18,7 @@ class Contrato {
 }
 
 app.get('/', async (req: Request, res: Response) => {
-   const uri = '';
+   const uri = process.env.MONGODB_URI ?? "";
    const contratos: Contrato[] = [];
 
    const client = new MongoClient(uri, {
@@ -28,7 +29,7 @@ app.get('/', async (req: Request, res: Response) => {
       },
    });
 
-   const database: Db = client.db('licitaciones');
+   const database: Db = client.db(process.env.MONGODB_DATABASE ?? "licitaciones");
    const collection: Collection = database.collection('contratos');
 
    const projectFields = { _id: 0, identifier: 1, valueAmount: 1 };
