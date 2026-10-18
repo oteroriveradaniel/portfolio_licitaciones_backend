@@ -17,7 +17,7 @@ class Contrato {
 }
 
 app.get('/', async (req: Request, res: Response) => {
-   const uri = 'mongodb+srv://oteroriveradaniel_db_user:2M09afAXCEgq4Edo@prod.16s6pfd.mongodb.net/';
+   const uri = '';
    const contratos: Contrato[] = [];
 
    const client = new MongoClient(uri, {
