@@ -33,12 +33,33 @@ app.get('/cuenta-licitaciones', async (req: Request, res: Response) => {
   };
 
    const query: Record<string, any>  = {
-      valueAmount: { $gte: filtros.minAmount, $lte: filtros.maxAmount },
-      tenderSubmissionDeadline: { $gte: filtros.minDate, $lte: filtros.maxDate },
+      valueAmount: {}, 
+      tenderSubmissionDeadline: {}, 
    };
 
-   if (filtros.category) {
+   // TODO: Añadir filtro licitaciones / adjudicaciones.
+
+   if (filtros.minAmount) {
+      query["valueAmount"]["$gte"] = filtros.minAmount;
+   }
+   if (filtros.maxAmount) {
+      query["valueAmount"]["$lte"] = filtros.maxAmount;
+   }
+   if (filtros.minDate) {
+      query["tenderSubmissionDeadline"]["$gte"] = filtros.minDate;
+   }
+   if (filtros.maxDate) {
+      query["tenderSubmissionDeadline"]["$lte"] = filtros.maxDate;
+   }
+   if (filtros.category && filtros.search) {
       query[filtros.category] = { $regex: filtros.search, $options: "i" };
+   }
+
+   if (Object.keys(query["valueAmount"]).length === 0) {
+      delete query["valueAmount"];
+   }
+   if (Object.keys(query["tenderSubmissionDeadline"]).length === 0) {
+      delete query["tenderSubmissionDeadline"];
    }
 
    const database: Db = client.db("licitaciones");
@@ -96,13 +117,36 @@ app.get('/', async (req: Request, res: Response) => {
   };
 
    const query: Record<string, any>  = {
-      valueAmount: { $gte: filtros.minAmount, $lte: filtros.maxAmount },
-      tenderSubmissionDeadline: { $gte: filtros.minDate, $lte: filtros.maxDate },
+      valueAmount: {}, 
+      tenderSubmissionDeadline: {}, 
    };
 
-   if (filtros.category) {
+   // TODO: Añadir filtro licitaciones / adjudicaciones.
+
+   if (filtros.minAmount) {
+      query["valueAmount"]["$gte"] = filtros.minAmount;
+   }
+   if (filtros.maxAmount) {
+      query["valueAmount"]["$lte"] = filtros.maxAmount;
+   }
+   if (filtros.minDate) {
+      query["tenderSubmissionDeadline"]["$gte"] = filtros.minDate;
+   }
+   if (filtros.maxDate) {
+      query["tenderSubmissionDeadline"]["$lte"] = filtros.maxDate;
+   }
+   if (filtros.category && filtros.search) {
       query[filtros.category] = { $regex: filtros.search, $options: "i" };
    }
+   
+   if (Object.keys(query["valueAmount"]).length === 0) {
+      delete query["valueAmount"];
+   }
+   if (Object.keys(query["tenderSubmissionDeadline"]).length === 0) {
+      delete query["tenderSubmissionDeadline"];
+   }
+
+   console.log(query);
 
    // TODO: Add pagination.
 
