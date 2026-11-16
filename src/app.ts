@@ -8,7 +8,7 @@ const PORT = 3000;
 
 dotenv.config();
 
-app.get('/cuenta-licitaciones', async (req: Request, res: Response) => {
+app.get('/api/cuenta-licitaciones', async (req: Request, res: Response) => {
    const uri: string = process.env.MONGODB_URI ?? "";
    const contratos: Contrato[] = [];
 
@@ -92,7 +92,7 @@ app.get('/cuenta-licitaciones', async (req: Request, res: Response) => {
    res.send(metricas);
 });
 
-app.get('/', async (req: Request, res: Response) => {
+app.get('/api/', async (req: Request, res: Response) => {
    const uri: string = process.env.MONGODB_URI ?? "";
    const contratos: Contrato[] = [];
 
