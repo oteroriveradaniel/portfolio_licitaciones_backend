@@ -153,7 +153,7 @@ app.get('/', async (req: Request, res: Response) => {
    const database: Db = client.db("licitaciones");
    const collection: Collection = database.collection('contratos');
 
-   const projectFields = { _id: 0, identifier: 1, valueAmount: 1 };
+   const projectFields = { _id: 0, identifier: 1, valueAmount: 1, title: 1 };
 
    for await (const item of collection.find(query).project(projectFields).skip(0).limit(50)) {
       const contrato: Contrato = new Contrato(item["identifier"], item["title"], item["valueAmount"]);
