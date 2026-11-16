@@ -20,12 +20,12 @@ app.get('/cuenta-licitaciones', async (req: Request, res: Response) => {
       },
    });
 
-   const { results, category, search, minAmount, maxAmount, minDate, maxDate } = req.query;
+   const { minAmount, maxAmount, minDate, maxDate } = req.query;
 
    const filtros = {
-    results: results || 'perfil', 
-    category: category?.toString() || '',
-    search: search || '',
+   //  results: results || 'perfil', 
+   //  category: category?.toString() || '',
+   //  search: search || '',
     minAmount: minAmount ? Number(minAmount) : 0,
     maxAmount: maxAmount ? Number(maxAmount) : 1000000,
     minDate: minDate ? new Date(minDate.toString()) : null,
@@ -51,9 +51,9 @@ app.get('/cuenta-licitaciones', async (req: Request, res: Response) => {
    if (filtros.maxDate) {
       query["tenderSubmissionDeadline"]["$lte"] = filtros.maxDate;
    }
-   if (filtros.category && filtros.search) {
-      query[filtros.category] = { $regex: filtros.search, $options: "i" };
-   }
+   // if (filtros.category && filtros.search) {
+   //    query[filtros.category] = { $regex: filtros.search, $options: "i" };
+   // }
 
    if (Object.keys(query["valueAmount"]).length === 0) {
       delete query["valueAmount"];
@@ -104,12 +104,12 @@ app.get('/', async (req: Request, res: Response) => {
       },
    });
 
-   const { results, category, search, minAmount, maxAmount, minDate, maxDate } = req.query;
+   const { minAmount, maxAmount, minDate, maxDate } = req.query;
 
    const filtros = {
-    results: results || 'perfil', 
-    category: category?.toString() || '',
-    search: search || '',
+   //  results: results || 'perfil', 
+   //  category: category?.toString() || '',
+   //  search: search || '',
     minAmount: minAmount ? Number(minAmount) : 0,
     maxAmount: maxAmount ? Number(maxAmount) : 1000000,
     minDate: minDate ? new Date(minDate.toString()) : null,
@@ -135,9 +135,9 @@ app.get('/', async (req: Request, res: Response) => {
    if (filtros.maxDate) {
       query["tenderSubmissionDeadline"]["$lte"] = filtros.maxDate;
    }
-   if (filtros.category && filtros.search) {
-      query[filtros.category] = { $regex: filtros.search, $options: "i" };
-   }
+   // if (filtros.category && filtros.search) {
+   //    query[filtros.category] = { $regex: filtros.search, $options: "i" };
+   // }
    
    if (Object.keys(query["valueAmount"]).length === 0) {
       delete query["valueAmount"];
